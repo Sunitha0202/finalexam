@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Pass a JavaScript variable to a partial in EJS -->
+  <%- include('partials/head.ejs', { title: "Update Sleep Log" }) %>
+<body>
+  <%- include('partials/navbar') %>
+
+  <div class="content">
+    <div class="update">
+      <h2>Update Sleep Log</h2>
+      <form action="/single-sleepLog/<%= sleepLog._id %>?_method=PUT" method="POST">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required value="<%= sleepLog.date.toISOString().substr(0, 10) %>" />
+
+        <label for="hoursSlept">Hours Slept:</label>
+        <input type="number" value="<%= sleepLog.hoursSlept %>" id="hoursSlept" name="hoursSlept" required />
+
+        <label for="quality">Quality:</label>
+        <input type="number" value="<%= sleepLog.quality %>" id="quality" name="quality" required />
+
+        <label for="comments">Comments:</label>
+        <textarea id="comments" name="comments" rows="4" required><%= sleepLog.comments %></textarea>
+
+        <button type="submit">Update Sleep Log</button>
+      </form>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

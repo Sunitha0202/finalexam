@@ -1,0 +1,61 @@
+<!-- Define a function to render the sleep log -->
+<% function renderSleepLog(sleepLog) { %>
+  <div class="item-details">
+    <article>
+      <h2>Date: <%= formatDate(sleepLog.date) %></h2>
+      <p>
+        <strong>Hours Slept:</strong> <%= sleepLog.hoursSlept %><br />
+        <strong>Quality:</strong> <%= sleepLog.quality %><br />
+        <strong>Comments:</strong> <%= sleepLog.comments %>
+      </p>
+  
+      <!-- Update button -->
+      <form
+        class="action-form"
+        method="GET"
+        action="/single-sleepLog/update/<%= sleepLog._id %>"
+      >
+        <button type="submit" class="update">Update</button>
+      </form>
+  
+      <!-- Delete button -->
+      <form
+        class="action-form"
+        method="POST"
+        action="/single-sleepLog/<%= sleepLog._id %>?_method=DELETE"
+      >
+        <button type="submit">Delete</button>
+      </form>
+    </article>
+  </div>
+<% } %>
+
+<% 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    // Format the date as desired (e.g., YYYY-MM-DD)
+    const formattedDate = date.toLocaleDateString('fi-FI', { year: 'numeric', month: 'long', day: 'numeric' });
+    return formattedDate;
+} 
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Pass a JavaScript variable to a partial in EJS -->
+  <%- include('partials/head.ejs', { title: "Sleep Log Details" }) %>
+  <body>
+    <%- include('partials/navbar.ejs') %>
+    
+    <div class="content">
+      <div class="home">
+        <div class="item-list">
+          <% if (sleepLog) { %> <%= renderSleepLog(sleepLog) %> <% } else { %>
+          <p>No sleep log found.</p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+  </body>
+</html>
